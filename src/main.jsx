@@ -6,7 +6,7 @@ import Header from './Header.jsx'
 import './reset.css'
 import './styles.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('app')).render(
   <React.StrictMode>
     <Header />
     <Main />
