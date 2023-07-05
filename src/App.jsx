@@ -99,6 +99,7 @@ export default function Main() {
 
 function MainDevices() {
     const initedRef = useRef(false);
+    const sumWidthRef = useRef(0);
     const [activeTab, setActiveTab] = useState('');
 
     useEffect(() => {
@@ -109,6 +110,7 @@ function MainDevices() {
     }, [activeTab]);
 
     const onSelectInput = event => {
+        sumWidthRef.current = 0;
         setActiveTab(event.target.value);
     };
     return(
@@ -136,7 +138,10 @@ function MainDevices() {
                         className={'section__tab' + (key === activeTab ? ' section__tab_active' : '')}
                         id={`tab_${key}`}
                         aria-controls={`panel_${key}`}
-                        onClick={() => setActiveTab(key)}
+                        onClick={() => {
+                            sumWidthRef.current = 0;
+                            setActiveTab(key)
+                        }}
                     >
                         {TABS[key].title}
                     </li>
@@ -144,14 +149,13 @@ function MainDevices() {
             </ul>
         </div>
 
-        <TabPanel activeTab={activeTab}></TabPanel>
+        <TabPanel activeTab={activeTab} sumWidthRef={sumWidthRef}></TabPanel>
     </section>
     )
 }
 
-function TabPanel({ activeTab }) {
+function TabPanel({ activeTab, sumWidthRef }) {
     const ref = useRef();
-    const sumWidthRef = useRef(0);
     const [hasRightScroll, setHasRightScroll] = useState(false);
 
     const onSize = width => {
@@ -159,9 +163,10 @@ function TabPanel({ activeTab }) {
     };
 
     useEffect(() => {
+        console.log(sumWidthRef.current)
         const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
             setHasRightScroll(newHasRightScroll);
-    });
+    }, [activeTab]);
 
     const onArrowCLick = () => {
         const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
