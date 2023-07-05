@@ -113,45 +113,52 @@ function MainDevices() {
         sumWidthRef.current = 0;
         setActiveTab(event.target.value);
     };
+
+    const onClick = (key) => {
+        sumWidthRef.current = 0;
+        setActiveTab(key)
+    };
+
     return(
         <section className="section main__devices">
-        <div className="section__title">
-            <h2 className="section__title-header">
-                Избранные устройства
-            </h2>
-
-            <select className="section__select" defaultValue="all" onInput={onSelectInput}>
-                {TABS_KEYS.map(key =>
-                    <option key={key} value={key}>
-                        {TABS[key].title}
-                    </option>
-                )}
-            </select>
-
-            <ul role="tablist" className="section__tabs">
-                {TABS_KEYS.map(key =>
-                    <li
-                        key={key}
-                        role="tab"
-                        aria-selected={key === activeTab ? 'true' : 'false'}
-                        tabIndex={key === activeTab ? '0' : undefined}
-                        className={'section__tab' + (key === activeTab ? ' section__tab_active' : '')}
-                        id={`tab_${key}`}
-                        aria-controls={`panel_${key}`}
-                        onClick={() => {
-                            sumWidthRef.current = 0;
-                            setActiveTab(key)
-                        }}
-                    >
-                        {TABS[key].title}
-                    </li>
-                )}
-            </ul>
-        </div>
-
-        <TabPanel activeTab={activeTab} sumWidthRef={sumWidthRef}></TabPanel>
-    </section>
+            <TabNav onSelectInput={onSelectInput} onClick={onClick} activeTab={activeTab}/>
+            <TabPanel activeTab={activeTab} sumWidthRef={sumWidthRef} />
+        </section>
     )
+}
+
+function TabNav({ onSelectInput, onClick, activeTab }) {
+
+    return (<div className="section__title">
+    <h2 className="section__title-header">
+        Избранные устройства
+    </h2>
+
+    <select className="section__select" defaultValue="all" onInput={onSelectInput}>
+        {TABS_KEYS.map(key =>
+            <option key={key} value={key}>
+                {TABS[key].title}
+            </option>
+        )}
+    </select>
+
+    <ul role="tablist" className="section__tabs">
+        {TABS_KEYS.map(key =>
+            <li
+                key={key}
+                role="tab"
+                aria-selected={key === activeTab ? 'true' : 'false'}
+                tabIndex={key === activeTab ? '0' : undefined}
+                className={'section__tab' + (key === activeTab ? ' section__tab_active' : '')}
+                id={`tab_${key}`}
+                aria-controls={`panel_${key}`}
+                onClick={() => onClick(key)}
+            >
+                {TABS[key].title}
+            </li>
+        )}
+    </ul>
+</div>)
 }
 
 function TabPanel({ activeTab, sumWidthRef }) {
@@ -163,7 +170,6 @@ function TabPanel({ activeTab, sumWidthRef }) {
     };
 
     useEffect(() => {
-        console.log(sumWidthRef.current)
         const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
             setHasRightScroll(newHasRightScroll);
     }, [activeTab]);
