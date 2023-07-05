@@ -26,13 +26,12 @@ export default function Main() {
 
   useEffect(() => {
       const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-      const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
 
       const newHasRightScroll = sumWidth > ref.current.offsetWidth;
       if (newHasRightScroll !== hasRightScroll) {
           setHasRightScroll(newHasRightScroll);
       }
-  });
+  }, [sizes, hasRightScroll]);
 
   const onArrowCLick = () => {
       const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
