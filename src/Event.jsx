@@ -7,10 +7,8 @@ export default function Event(props) {
   const { onSize } = props;
 
   useEffect(() => {
-      const width = ref.current.offsetWidth;
-      const height = ref.current.offsetHeight;
       if (onSize) {
-          onSize({ width, height });
+          onSize(ref.current.offsetWidth);
       }
   });
 

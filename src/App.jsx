@@ -3,10 +3,8 @@ import Event from './Event';
 import { TABS, TABS_KEYS } from './tabs';
 
 export default function Main() {
-  const ref = useRef();
   const initedRef = useRef(false);
   const [activeTab, setActiveTab] = useState('');
-  const [hasRightScroll, setHasRightScroll] = useState(false);
 
   useEffect(() => {
       if (!activeTab && !initedRef.current) {
@@ -17,30 +15,6 @@ export default function Main() {
 
   const onSelectInput = event => {
       setActiveTab(event.target.value);
-  };
-
-  let sizes = [];
-  const onSize = size => {
-      sizes = [...sizes, size];
-  };
-
-  useEffect(() => {
-      const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-
-      const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-      if (newHasRightScroll !== hasRightScroll) {
-          setHasRightScroll(newHasRightScroll);
-      }
-  }, [sizes, hasRightScroll]);
-
-  const onArrowCLick = () => {
-      const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
-      if (scroller) {
-          scroller.scrollTo({
-              left: scroller.scrollLeft + 400,
-              behavior: 'smooth'
-          });
-      }
   };
 
   return <main className="main">
@@ -166,7 +140,36 @@ export default function Main() {
               </ul>
           </div>
 
-          <div className="section__panel-wrapper" ref={ref}>
+          <TabPanel activeTab={activeTab}></TabPanel>
+      </section>
+  </main>;
+}
+
+function TabPanel({ activeTab }) {
+    const ref = useRef();
+    const sumWidthRef = useRef(0);
+    const [hasRightScroll, setHasRightScroll] = useState(false);
+
+    const onSize = width => {
+        sumWidthRef.current += width
+    };
+
+    useEffect(() => {
+        const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
+            setHasRightScroll(newHasRightScroll);
+    });
+
+    const onArrowCLick = () => {
+        const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
+        if (scroller) {
+            scroller.scrollTo({
+                left: scroller.scrollLeft + 400,
+                behavior: 'smooth'
+            });
+        }
+    };
+    return (
+        <div className="section__panel-wrapper" ref={ref}>
               {TABS_KEYS.map(key =>
                   <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
                       <ul className="section__panel-list">
@@ -184,6 +187,5 @@ export default function Main() {
                   <div className="section__arrow" onClick={onArrowCLick}></div>
               }
           </div>
-      </section>
-  </main>;
+    )
 }
