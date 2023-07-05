@@ -13,7 +13,7 @@ export default function Main() {
           initedRef.current = true;
           setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
       }
-  });
+  }, [activeTab]);
 
   const onSelectInput = event => {
       setActiveTab(event.target.value);
