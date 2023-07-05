@@ -3,20 +3,6 @@ import Event from './Event';
 import { TABS, TABS_KEYS } from './tabs';
 
 export default function Main() {
-  const initedRef = useRef(false);
-  const [activeTab, setActiveTab] = useState('');
-
-  useEffect(() => {
-      if (!activeTab && !initedRef.current) {
-          initedRef.current = true;
-          setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
-      }
-  }, [activeTab]);
-
-  const onSelectInput = event => {
-      setActiveTab(event.target.value);
-  };
-
   return <main className="main">
       <section className="section main__general">
           <h2 className="section__title section__title-header section__main-title">Главное</h2>
@@ -107,42 +93,60 @@ export default function Main() {
               />
           </ul>
       </section>
-
-      <section className="section main__devices">
-          <div className="section__title">
-              <h2 className="section__title-header">
-                  Избранные устройства
-              </h2>
-
-              <select className="section__select" defaultValue="all" onInput={onSelectInput}>
-                  {TABS_KEYS.map(key =>
-                      <option key={key} value={key}>
-                          {TABS[key].title}
-                      </option>
-                  )}
-              </select>
-
-              <ul role="tablist" className="section__tabs">
-                  {TABS_KEYS.map(key =>
-                      <li
-                          key={key}
-                          role="tab"
-                          aria-selected={key === activeTab ? 'true' : 'false'}
-                          tabIndex={key === activeTab ? '0' : undefined}
-                          className={'section__tab' + (key === activeTab ? ' section__tab_active' : '')}
-                          id={`tab_${key}`}
-                          aria-controls={`panel_${key}`}
-                          onClick={() => setActiveTab(key)}
-                      >
-                          {TABS[key].title}
-                      </li>
-                  )}
-              </ul>
-          </div>
-
-          <TabPanel activeTab={activeTab}></TabPanel>
-      </section>
+      <MainDevices></MainDevices>
   </main>;
+}
+
+function MainDevices() {
+    const initedRef = useRef(false);
+    const [activeTab, setActiveTab] = useState('');
+
+    useEffect(() => {
+        if (!activeTab && !initedRef.current) {
+            initedRef.current = true;
+            setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
+        }
+    }, [activeTab]);
+
+    const onSelectInput = event => {
+        setActiveTab(event.target.value);
+    };
+    return(
+        <section className="section main__devices">
+        <div className="section__title">
+            <h2 className="section__title-header">
+                Избранные устройства
+            </h2>
+
+            <select className="section__select" defaultValue="all" onInput={onSelectInput}>
+                {TABS_KEYS.map(key =>
+                    <option key={key} value={key}>
+                        {TABS[key].title}
+                    </option>
+                )}
+            </select>
+
+            <ul role="tablist" className="section__tabs">
+                {TABS_KEYS.map(key =>
+                    <li
+                        key={key}
+                        role="tab"
+                        aria-selected={key === activeTab ? 'true' : 'false'}
+                        tabIndex={key === activeTab ? '0' : undefined}
+                        className={'section__tab' + (key === activeTab ? ' section__tab_active' : '')}
+                        id={`tab_${key}`}
+                        aria-controls={`panel_${key}`}
+                        onClick={() => setActiveTab(key)}
+                    >
+                        {TABS[key].title}
+                    </li>
+                )}
+            </ul>
+        </div>
+
+        <TabPanel activeTab={activeTab}></TabPanel>
+    </section>
+    )
 }
 
 function TabPanel({ activeTab }) {
