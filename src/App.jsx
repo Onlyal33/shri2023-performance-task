@@ -98,8 +98,16 @@ export default function Main() {
 }
 
 function MainDevices() {
+    const initedRef = useRef(false);
     const sumWidthRef = useRef(0);
-    const [activeTab, setActiveTab] = useState('all');
+    const [activeTab, setActiveTab] = useState('');
+
+    useEffect(() => {
+        if (!activeTab && !initedRef.current) {
+            initedRef.current = true;
+            setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
+        }
+    }, [activeTab]);
 
     const onSelectInput = event => {
         sumWidthRef.current = 0;
@@ -155,6 +163,7 @@ function TabPanel({ activeTab, sumWidthRef }) {
     };
 
     useEffect(() => {
+        console.log(sumWidthRef.current)
         const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
             setHasRightScroll(newHasRightScroll);
     }, [activeTab]);
