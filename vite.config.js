@@ -6,6 +6,16 @@ export default defineConfig(({ command }) => {
   const config = {
     plugins: [react(), splitVendorChunkPlugin()],
     base: '/',
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react'],
+            reactDom: ['react-dom'],
+          }
+        }
+      },
+    },
   }
 
   if (command !== 'serve') {
