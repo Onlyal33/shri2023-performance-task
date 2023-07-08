@@ -7,14 +7,14 @@ export default defineConfig(({ command }) => {
     plugins: [react(), splitVendorChunkPlugin()],
     base: '/',
     build: {
-      rollupOptions: {
+/*       rollupOptions: {
         output: {
           manualChunks: {
             react: ['react'],
             reactDom: ['react-dom'],
           }
         }
-      },
+      }, */
     },
   }
 
