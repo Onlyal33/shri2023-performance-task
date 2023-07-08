@@ -1,16 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Яндекс.Дом</title>
-    <link rel="stylesheet" type="text/css" href="src/reset.css">
-    <link rel="stylesheet" type="text/css" href="src/styles.css">
+    <link rel="stylesheet" type="text/css" href="src/reset.css" />
+    <link rel="stylesheet" type="text/css" href="src/styles.css" />
 </head>
+
 <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="app">
+        <header class="header" id="header">
+        </header>
+        <main class="main">
+            <section class="section main__general">
+                <h2 class="section__title section__title-header section__main-title">
+                    Главное
+                </h2>
+                <div class="hero-dashboard">
+                    <div class="hero-dashboard__primary">
+                        <h3 class="hero-dashboard__title">Привет, Геннадий!</h3>
+                        <p class="hero-dashboard__subtitle">
+                            Двери и окна закрыты, сигнализация включена.
+                        </p>
+                        <ul class="hero-dashboard__info">
+                            <li class="hero-dashboard__item">
+                                <div class="hero-dashboard__item-title">Дома</div>
+                                <div class="hero-dashboard__item-details">
+                                    +23
+                                    <span class="a11y-hidden">°</span>
+                                </div>
+                            </li>
+                            <li class="hero-dashboard__item">
+                                <div class="hero-dashboard__item-title">За окном</div>
+                                <div class="hero-dashboard__item-details">
+                                    +19
+                                    <span class="a11y-hidden">°</span>
+                                    <div class="hero-dashboard__icon hero-dashboard__icon_rain" role="img"
+                                        aria-label="Дождь"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="hero-dashboard__schedule">
+                        <li class="event">
+                            <button class="event__button">
+                                <span class="event__icon event__icon_temp" role="img" aria-label="Температура"></span>
+                                <h4 class="event__title">Philips Cooler</h4>
+                                <span class="event__subtitle">
+                                    Начнет охлаждать в 16:30
+                                </span>
+                            </button>
+                        </li>
+                        <li class="event">
+                            <button class="event__button">
+                                <span class="event__icon event__icon_light" role="img" aria-label="Освещение"></span>
+                                <h4 class="event__title">
+                                    Xiaomi Yeelight LED Smart Bulb
+                                </h4>
+                                <span class="event__subtitle">Включится в 17:00</span>
+                            </button>
+                        </li>
+                        <li class="event">
+                            <button class="event__button">
+                                <span class="event__icon event__icon_light" role="img" aria-label="Освещение"></span>
+                                <h4 class="event__title">
+                                    Xiaomi Yeelight LED Smart Bulb
+                                </h4>
+                                <span class="event__subtitle">Включится в 17:00</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section main__scripts">
+                <h2 class="section__title section__title-header">
+                    Избранные сценарии
+                </h2>
+
+                <ul class="event-grid">
+                    <li class="event event_slim">
+                        <button class="event__button">
+                            <span class="event__icon event__icon_light2" role="img" aria-label="Освещение"></span>
+                            <h4 class="event__title">
+                                Выключить весь свет в доме и во дворе
+                            </h4>
+                        </button>
+                    </li>
+                    <li class="event event_slim">
+                        <button class="event__button">
+                            <span class="event__icon event__icon_schedule" role="img" aria-label="Расписание"></span>
+                            <h4 class="event__title">Я ухожу</h4>
+                        </button>
+                    </li>
+                    <li class="event event_slim">
+                        <button class="event__button">
+                            <span class="event__icon event__icon_light2" role="img" aria-label="Освещение"></span>
+                            <h4 class="event__title">Включить свет в коридоре</h4>
+                        </button>
+                    </li>
+                    <li class="event event_slim">
+                        <button class="event__button">
+                            <span class="event__icon event__icon_temp2" role="img" aria-label="Температура"></span>
+                            <h4 class="event__title">Набрать горячую ванну</h4>
+                            <span class="event__subtitle">Начнётся в 18:00</span>
+                        </button>
+                    </li>
+                    <li class="event event_slim">
+                        <button class="event__button">
+                            <span class="event__icon event__icon_temp2" role="img" aria-label="Температура"></span>
+                            <h4 class="event__title">
+                                Сделать пол тёплым во всей квартире
+                            </h4>
+                        </button>
+                    </li>
+                </ul>
+            </section>
+            <section class="section main__devices" id="main">
+            </section>
+        </main>
+        <script type="module" src="/src/main.jsx"></script>
+    </div>
     <footer class="footer">
         <ul class="footer__list">
             <li class="footer__item">
@@ -27,9 +139,8 @@
             </li>
         </ul>
 
-        <div class="footer__copyright">
-            © 1997–2023 ООО «Яндекс»
-        </div>
+        <div class="footer__copyright">© 1997–2023 ООО «Яндекс»</div>
     </footer>
 </body>
+
 </html>

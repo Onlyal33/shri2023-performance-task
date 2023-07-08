@@ -12,7 +12,7 @@ export default function Header() {
       setExpanded(!expanded);
   };
 
-  return <header className="header">
+  return <>
       <a href="/" className="header__logo" aria-label="Яндекс.Дом"></a>
       <button className="header__menu" aria-expanded={expanded ? 'true' : 'false'} onClick={onClick}>
           <span className="header__menu-text a11y-hidden">
@@ -30,5 +30,5 @@ export default function Header() {
               <a className="header__link" href="/scripts">Сценарии</a>
           </li>
       </ul>
-  </header>;
+  </>;
 }

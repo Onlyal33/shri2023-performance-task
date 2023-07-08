@@ -1,11 +1,11 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client';
-import Main from './App.jsx'
-import Header from './Header.jsx'
+import MainDevices from './App.jsx';
+import Header from './Header.jsx';
 
-createRoot(document.getElementById('app')).render(
-  <StrictMode>
+createRoot(document.getElementById('main')).render(
+    <MainDevices />
+)
+
+createRoot(document.getElementById('header')).render(
     <Header />
-    <Main />
-  </StrictMode>,
 )
