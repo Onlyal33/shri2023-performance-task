@@ -5,7 +5,7 @@ import { TABS, TABS_KEYS } from './tabs';
 export default function MainDevices() {
   const initedRef = useRef(false);
   const sumWidthRef = useRef(0);
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('');
 
   useEffect(() => {
     if (!activeTab && !initedRef.current) {
@@ -91,28 +91,28 @@ function TabPanel({ activeTab, sumWidthRef }) {
   };
   return (
     <div className="section__panel-wrapper" ref={ref}>
-       <div
-          key={activeTab}
+      {TABS_KEYS.map((key) => (
+        <div
+          key={key}
           role="tabpanel"
           className={
-            'section__panel'
+            'section__panel' +
+            (key === activeTab ? '' : ' section__panel_hidden')
           }
-          aria-hidden={'false'}
-          id={`panel_${activeTab}`}
-          aria-labelledby={`tab_${activeTab}`}
+          aria-hidden={key === activeTab ? 'false' : 'true'}
+          id={`panel_${key}`}
+          aria-labelledby={`tab_${key}`}
         >
-
           <ul className="section__panel-list">
-            {TABS[activeTab].items.map((item, index) => (
+            {TABS[key].items.map((item, index) => (
               <Event key={index} {...item} onSize={onSize} />
             ))}
           </ul>
-
-      </div>
+        </div>
+      ))}
       {hasRightScroll && (
         <div className="section__arrow" onClick={onArrowCLick}></div>
       )}
-
     </div>
   );
 }
