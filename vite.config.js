@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   const config = {
-    plugins: [react(), splitVendorChunkPlugin(), viteCompression({algorithm: 'brotliCompress', deleteOriginFile: true})],
+    plugins: [react(), splitVendorChunkPlugin(), [viteCompression({algorithm: 'brotliCompress'})]],
     base: '/',
     build: {
 /*       rollupOptions: {
