@@ -3,11 +3,9 @@ import Event from './Event';
 import { TABS, TABS_KEYS } from './tabs';
 
 export default function MainDevices() {
-  const ref = useRef();
   const initedRef = useRef(false);
   const sumWidthRef = useRef(0);
   const [activeTab, setActiveTab] = useState('');
-  const [hasRightScroll, setHasRightScroll] = useState(false);
 
   useEffect(() => {
     if (!activeTab && !initedRef.current) {
@@ -21,36 +19,9 @@ export default function MainDevices() {
     setActiveTab(event.target.value);
   };
 
-
-  const onSize = (width) => {
-    sumWidthRef.current += width;
-  };
-
   const onClick = (key) => {
     sumWidthRef.current = 0;
     setActiveTab(key);
-  };
-
-
-
-
-
-
-  useEffect(() => {
-    const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
-    setHasRightScroll(newHasRightScroll);
-  }, [activeTab]);
-
-  const onArrowCLick = () => {
-    const scroller = ref.current.querySelector(
-      '.section__panel:not(.section__panel_hidden)'
-    );
-    if (scroller) {
-      scroller.scrollTo({
-        left: scroller.scrollLeft + 400,
-        behavior: 'smooth',
-      });
-    }
   };
 
   return (
@@ -89,6 +60,36 @@ export default function MainDevices() {
         ))}
       </ul>
     </div>
+      <TabPanel activeTab={activeTab} sumWidthRef={sumWidthRef} />
+    </>
+  );
+}
+
+function TabPanel({ activeTab, sumWidthRef }) {
+  const ref = useRef();
+  const [hasRightScroll, setHasRightScroll] = useState(false);
+
+  const onSize = (width) => {
+    sumWidthRef.current += width;
+  };
+
+  useEffect(() => {
+    const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
+    setHasRightScroll(newHasRightScroll);
+  }, [activeTab]);
+
+  const onArrowCLick = () => {
+    const scroller = ref.current.querySelector(
+      '.section__panel:not(.section__panel_hidden)'
+    );
+    if (scroller) {
+      scroller.scrollTo({
+        left: scroller.scrollLeft + 400,
+        behavior: 'smooth',
+      });
+    }
+  };
+  return (
     <div className="section__panel-wrapper" ref={ref}>
       {TABS_KEYS.map((key) => (
         <div
@@ -113,6 +114,5 @@ export default function MainDevices() {
         <div className="section__arrow" onClick={onArrowCLick}></div>
       )}
     </div>
-    </>
   );
 }
