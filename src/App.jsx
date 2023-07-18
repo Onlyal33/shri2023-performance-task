@@ -3,16 +3,13 @@ import Event from './Event';
 import { TABS, TABS_KEYS } from './tabs';
 
 export default function MainDevices() {
-  const sumWidthRef = useRef(0);
   const [activeTab, setActiveTab] = useState(new URLSearchParams(location.search).get('tab') || 'all');
 
   const onSelectInput = (event) => {
-    sumWidthRef.current = 0;
     setActiveTab(event.target.value);
   };
 
   const onClick = (key) => {
-    sumWidthRef.current = 0;
     setActiveTab(key);
   };
 
@@ -52,21 +49,17 @@ export default function MainDevices() {
         ))}
       </ul>
     </div>
-      <TabPanel activeTab={activeTab} sumWidthRef={sumWidthRef} />
+      <TabPanel activeTab={activeTab} />
     </>
   );
 }
 
-function TabPanel({ activeTab, sumWidthRef }) {
+function TabPanel({ activeTab }) {
   const ref = useRef();
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
-  const onSize = (width) => {
-    sumWidthRef.current += width;
-  };
-
   useEffect(() => {
-    const newHasRightScroll = sumWidthRef.current > ref.current.offsetWidth;
+    const newHasRightScroll = ref.current.scrollWidth > ref.current.offsetWidth;
     setHasRightScroll(newHasRightScroll);
   }, [activeTab]);
 
@@ -97,7 +90,7 @@ function TabPanel({ activeTab, sumWidthRef }) {
         >
           <ul className="section__panel-list">
             {TABS[key].items.map((item, index) => (
-              <Event key={index} {...item} onSize={onSize} />
+              <Event key={index} {...item} />
             ))}
           </ul>
         </div>
