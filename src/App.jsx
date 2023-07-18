@@ -55,16 +55,17 @@ export default function MainDevices() {
 }
 
 function TabPanel({ activeTab }) {
-  const ref = useRef();
+  const ref = useRef([]);
+  const refWrapper = useRef();
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
   useEffect(() => {
-    const newHasRightScroll = ref.current.scrollWidth > ref.current.offsetWidth;
+    const newHasRightScroll = ref.current[activeTab].scrollWidth > ref.current[activeTab].offsetWidth;
     setHasRightScroll(newHasRightScroll);
   }, [activeTab]);
 
   const onArrowCLick = () => {
-    const scroller = ref.current.querySelector(
+    const scroller = refWrapper.current.querySelector(
       '.section__panel:not(.section__panel_hidden)'
     );
     if (scroller) {
@@ -75,9 +76,10 @@ function TabPanel({ activeTab }) {
     }
   };
   return (
-    <div className="section__panel-wrapper" ref={ref}>
+    <div className="section__panel-wrapper" ref={refWrapper}>
       {TABS_KEYS.map((key) => (
         <div
+          ref={(el) => (ref.current[key] = el)}
           key={key}
           role="tabpanel"
           className={
