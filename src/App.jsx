@@ -3,16 +3,8 @@ import Event from './Event';
 import { TABS, TABS_KEYS } from './tabs';
 
 export default function MainDevices() {
-  const initedRef = useRef(false);
   const sumWidthRef = useRef(0);
-  const [activeTab, setActiveTab] = useState('');
-
-  useEffect(() => {
-    if (!activeTab && !initedRef.current) {
-      initedRef.current = true;
-      setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
-    }
-  }, [activeTab]);
+  const [activeTab, setActiveTab] = useState(new URLSearchParams(location.search).get('tab') || 'all');
 
   const onSelectInput = (event) => {
     sumWidthRef.current = 0;
@@ -31,8 +23,8 @@ export default function MainDevices() {
 
       <select
         className="section__select"
-        defaultValue="all"
         onInput={onSelectInput}
+        value={activeTab}
       >
         {TABS_KEYS.map((key) => (
           <option key={key} value={key}>
