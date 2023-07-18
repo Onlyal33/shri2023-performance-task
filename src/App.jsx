@@ -55,7 +55,7 @@ export default function MainDevices() {
 }
 
 function TabPanel({ activeTab }) {
-  const ref = useRef([]);
+  const ref = useRef({});
   const refWrapper = useRef();
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
